@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>History Data</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tempus Dominus Styles -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.19/dist/css/tempus-dominus.min.css" crossorigin="anonymous">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,
+    maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+      .chart-container {
+        max-width: 400px;
+        /* 박스의 최대 너비 */
+        padding: 20px;
+        /* 차트 주변의 여백 */
+        background-color: #f8f9fa;
+        /* 박스의 배경색 */
+        border-radius: 10px;
+        /* 박스의 모서리 둥글기 */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        /* 박스에 그림자 효과 */
+        margin: auto;
+        /* 가운데 정렬 */
+      }
+
+      /* 기본 스타일 */
+      canvas {
+        max-width: 90%;
+        /* 최대 너비 100% */
+        max-height: 250px;
+        /* 최대 높이 300px로 제한 */
+        width: 90%;
+        /* 너비를 항상 부모 요소의 100%로 설정 */
+        height: auto;
+        /* 높이 자동 조정 */
+        margin: 15px 0;
+        /* 마진 조정 */
+      }
+
+      /* 모바일 화면을 위한 미디어 쿼리 */
+      @media screen and (max-width: 768px) {
+        canvas {
+          max-width: 100%;
+          /* 모바일 화면에서 너비 100%로 조정 */
+          margin: 10px 0;
+          /* 모바일 화면에서 마진 조정 */
+        }
+      }
+    </style>
+  </head>
+  <body bgcolor="gray">
+    <div class="container mt-4">
+      <form id="dateRangeForm">
+        <div class="row">
+          <div class="col">
+            <label for="startDate">Start Date and Time:</label>
+            <div class="input-group date" id="datetimepicker1">
+              <input type="text" id="startDate" class="form-control">
+              <span class="input-group-text">
+                <i class="bi bi-calendar-date"></i>
+              </span>
+            </div>
+          </div>
+          <div class="col">
+            <label for="endDate">End Date and Time:</label>
+            <div class="input-group date" id="datetimepicker2">
+              <input type="text" id="endDate" class="form-control">
+              <span class="input-group-text">
+                <i class="bi bi-calendar-date"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <button type="button" id="loadData" class="btn btn-primary mt-2">Load Data</button>
+      </form>
+    </div>
+    <div class="chart-container">
+      <canvas id="producerChart"></canvas>
+    </div>
+    <br>
+    <div class="chart-container">
+      <canvas id="consumerChart"></canvas>
+    </div>
+    <!-- 스크립트 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha256-BRqBN7dYgABqtY9Hd4ynE+1slnEw+roEPFzQ7TRRfcg=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.7.19/dist/js/tempus-dominus.min.js" crossorigin="anonymous"></script>
+    <script>
+      var producerChart = null,
+        consumerChart = null; // 전역 차트 변수 초기화
+      document.addEventListener('DOMContentLoaded', function() {
+        // 오늘 날짜 계산 및 문자열 형식으로 변환
+        var today = new Date();
+        var dateString = today.toISOString().split('T')[0];
+        // datetimepicker 초기화 및 오늘 날짜로 설정
+        new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'), {
+          defaultDate: today
+        });
+        new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'), {
+          defaultDate: today
+        });
+        // 오늘 날짜를 입력 필드에 설정
+        $('#startDate').val(dateString);
+        $('#endDate').val(dateString);
+        // 페이지 로드 시 데이터 로드
+        loadData();
+        // "Load Data" 버튼 클릭 이벤트 처리
+        $('#loadData').click(loadData);
+      });
+
+      function loadData() {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+        $.ajax({
+          url: '/history',
+          type: 'GET',
+          data: {
+            start_date: startDate,
+            end_date: endDate
+          },
+          success: function(response) {
+            var producerData = response.filter(item => item.device_id === 'SP001');
+            var consumerData = response.filter(item => item.device_id === 'C001');
+            // 차트 업데이트 또는 생성
+            producerChart = updateOrCreateChart(producerChart, producerData, 'Producer Current', 'producerChart');
+            consumerChart = updateOrCreateChart(consumerChart, consumerData, 'Consumer Current', 'consumerChart');
+          }
+        });
+      }
+      // 차트 초기화 함수
+      function initChart(ctx, data, label) {
+        return new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: data.map(item => item.timestamp),
+            datasets: [{
+              label: label,
+              data: data.map(item => item.power_value),
+              borderColor: 'rgb(75, 192, 192)',
+              tension: 0.1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+      // 차트 업데이트 또는 생성 함수
+      function updateOrCreateChart(chart, data, label, chartId) {
+        if (chart) {
+          // 기존 차트 업데이트
+          chart.data.labels = data.map(item => item.timestamp);
+          chart.data.datasets[0].data = data.map(item => item.power_value);
+          chart.update();
+        } else {
+          // 새 차트 생성
+          chart = initChart(document.getElementById(chartId).getContext('2d'), data, label);
+        }
+        return chart;
+      }
+    </script>
+  </body>
+</html>

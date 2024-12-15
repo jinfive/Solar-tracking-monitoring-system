@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Sensor Data</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no,
+maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        .chart-container {
+            max-width: 400px; /* 박스의 최대 너비 */
+            padding: 20px; /* 차트 주변의 여백 */
+            background-color: #f8f9fa; /* 박스의 배경색 */
+            border-radius: 10px; /* 박스의 모서리 둥글기 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 박스에 그림자 효과 */
+            margin: auto; /* 가운데 정렬 */
+        }
+        /* 기본 스타일 */
+        canvas {
+            max-width: 90%;   /* 최대 너비 100% */
+            max-height: 250px; /* 최대 높이 300px로 제한 */
+            width: 90%;       /* 너비를 항상 부모 요소의 100%로 설정 */
+            height: auto;      /* 높이 자동 조정 */
+            margin: 15px 0;    /* 마진 조정 */
+        }
+
+        /* 모바일 화면을 위한 미디어 쿼리 */
+        @media screen and (max-width: 768px) {
+            canvas {
+                max-width: 100%;   /* 모바일 화면에서 너비 100%로 조정 */
+                margin: 10px 0;    /* 모바일 화면에서 마진 조정 */
+            }
+        }
+    </style>
+
+
+</head>
+<body bgcolor="gray">
+    <div class="chart-container"><canvas id="producerChart"></canvas></div>
+    <br>
+    <div class="chart-container"><canvas id="consumerChart"></canvas></div>
+    <br>
+    <a href="/history">view history</a>
+
+    <script type="text/javascript">
+        var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+            function initChart(ctx, label) {
+            return new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: label,
+                        data: [],
+                        backgroundColor: 'rgba(0, 123, 255, 0.5)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    },
+            });
+        }
+
+        var producerChart = initChart(document.getElementById('producerChart').getContext('2d'), 'Producer Current (mW)');
+        var consumerChart = initChart(document.getElementById('consumerChart').getContext('2d'), 'Consumer Current (mW)');
+
+        socket.on('newdata', function(data) {
+        var chart = data.device_id === 'SP001' ? producerChart : consumerChart;
+
+        if (chart.data.labels.length > 20) {
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
+    }
+
+    chart.data.labels.push(data.timestamp); // X축에 timestamp 추가
+    chart.data.datasets[0].data.push(data.power_value); // 데이터셋에 power_value 추가
+
+    chart.update();
+});
+
+
+    </script>
+</body>
+</html>
