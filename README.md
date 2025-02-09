@@ -64,45 +64,51 @@ Requirement
 --
 
 ```
-git clone https://github.com/jinfive/Power-analysis-control-system-for-home-smart-grid.git
+git clone https://github.com/jinfive/Solar-tracking-monitoring-system.git
 ```
 
+
+Python Preferences
 ```
-cd /path/to/script/directory
-python3 four_ver_rpi.py
+sudo apt-get update
+sudo apt-get install python3.13
 ```
-Run script automatically when Raspberry Pi boots
+Install required libraries
 ```
-nano launcher.sh
+pip install -r requirements.txt
 ```
-Enter the following
+Database settings
 ```
-#!/bin/sh
-cd /path/to/script/directory
-python3 four_ver_rpi.py
+sudo apt-get install sqlite3
 ```
+GPIO Pin settings
+```
+switch1=6
+switch2=19
+switch3=20
+led1=13
+led2=26
+led3=21
+rel1=14
+rel2=15
+rel3=18
 
 ```
-chmod 755 launcher.sh
-```
 
-Edit crontab
+Starting server
 
 ```
-sudo crontab -e
-```
-Add the following line to the end of the file
+python app.py
 
 ```
-@reboot sh /path/to/launcher.sh &
-```
+
 ## STACK 😸
 <br>
 Enviroment
 <br>
 <div style="display: flex; align-items: center;">
   <img src="https://img.shields.io/badge/raspberrypi-A22846?style=for-the-badge&logo=raspberrypi&logoColor=black" style="border-radius:10px">
-  <img src="https://img.shields.io/badge/googlecolab-F9AB00?style=for-the-badge&logo=googlecolab&logoColor=white" style="border-radius:10px">
+  <img src="https://img.shields.io/badge/arduino-00878F?style=for-the-badge&logo=arduino&logoColor=white" style="border-radius:10px">
   
 </div>
 <br><br>
@@ -111,6 +117,7 @@ Development
 <div style="display: flex; align-items: center;">
   <img src="https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white" style="border-radius:10px">
   <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white" style="border-radius:10px">
+  <img src="https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" style="border-radius:10px">
   
 </div>
 
@@ -125,7 +132,7 @@ Communication
 ## 🌐 etc
 <a href="https://docs.google.com/spreadsheets/d/1SN1DLJhe6vC6NH8kIV9UJla5Z8VHP_Rl/edit?gid=429682832#gid=429682832" target="_blank">grades data >> https://docs.google.com/spreadsheets/d/1SN1DLJhe6vC6NH8kIV9UJla5Z8VHP_Rl/edit?gid=429682832#gid=429682832</a>
 
-<a href="https://drive.google.com/file/d/1fBGJxnjC3L75YPvUwr9KR8rwJBDAOmsQ/view?usp=sharing" target="_blank">presentation >> https://drive.google.com/file/d/1fBGJxnjC3L75YPvUwr9KR8rwJBDAOmsQ/view?usp=sharing</a>
+<a href="https://drive.google.com/file/d/149YLKMNEbDNxh-1hvI2serDJloH-pGQU/view?usp=sharing" target="_blank">presentation >> https://drive.google.com/file/d/149YLKMNEbDNxh-1hvI2serDJloH-pGQU/view?usp=sharing</a>
 
-<a href="https://drive.google.com/file/d/1QAvmrWZJEv4rtOqb98qd1T-YY2MO6o6d/view?usp=sharing" target="_blank">final repot>> https://drive.google.com/file/d/1QAvmrWZJEv4rtOqb98qd1T-YY2MO6o6d/view?usp=sharing</a>
-](https://drive.google.com/file/d/1fBGJxnjC3L75YPvUwr9KR8rwJBDAOmsQ/view?usp=sharing)
+<a href="https://drive.google.com/file/d/1zlaA2Yulcg3j9oEsoWPsHIVzqAzpDuHk/view?usp=sharing" target="_blank">Demonstration video>> https://drive.google.com/file/d/1zlaA2Yulcg3j9oEsoWPsHIVzqAzpDuHk/view?usp=sharing</a>
+
