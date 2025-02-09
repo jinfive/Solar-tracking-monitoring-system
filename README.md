@@ -35,10 +35,10 @@ team member:남강현,박상욱,이정원
 ## Project Introduction
 Development of Solar tracking monitoring system
 <ul>
-  <li>Energy saving: Blocking standby power for home appliances used at home</li>
-  <li>Abnormal current detection: Analyzes the current waveform of electronic products in use and cuts off power when an abnormality is detected.</li>
-  <li>Home appliance classification: Classify home appliances by analyzing the current waveform of the home appliances currently in use.</li>
-  <li>Accident prevention: Prevention of electrical accidents through outlets</li>
+  <li>Automated sun position tracking for optimal panel alignment</li>
+  <li>Enhanced energy capture through dynamic positioning</li>
+  <li>Real-time power generation data collection and analysis</li>
+  <li>Historical data tracking with customizable date ranges</li>
 </ul>
 <br>
 <h2>Getting Started Guide</h2> 
@@ -46,9 +46,16 @@ Development of Solar tracking monitoring system
 Requirement
 --
 <ul>
-  <ol>Python 3.13.0</ol>
-  <ol>HTML5</ol>
-  <ol>엑셀파일</ol>
+  <h3>Hardware Components</h3>
+<li>🌞 Solar Panel with INA219 Current Sensor</li>
+<li>🔌 Additional INA219 Current Sensor</li>
+<li>📡 ESP8266 Microcontroller</li>
+<li>🥧 Raspberry Pi (for system control)</li>
+<li>🎛️ ADS1115 ADC Module</li>
+<h3>Software Dependencies</h3> 
+<li>🐍 Python 3.13.0</li>
+<li>🌐 HTML5</li>
+<li>💾 SQLite</li>
   
 </ul>
 
