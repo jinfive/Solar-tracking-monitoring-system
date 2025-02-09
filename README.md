@@ -130,7 +130,7 @@ Communication
 
 
 ## 🌐 etc
-<a href="https://docs.google.com/spreadsheets/d/1SN1DLJhe6vC6NH8kIV9UJla5Z8VHP_Rl/edit?gid=429682832#gid=429682832" target="_blank">grades data >> https://docs.google.com/spreadsheets/d/1SN1DLJhe6vC6NH8kIV9UJla5Z8VHP_Rl/edit?gid=429682832#gid=429682832</a>
+
 
 <a href="https://drive.google.com/file/d/149YLKMNEbDNxh-1hvI2serDJloH-pGQU/view?usp=sharing" target="_blank">presentation >> https://drive.google.com/file/d/149YLKMNEbDNxh-1hvI2serDJloH-pGQU/view?usp=sharing</a>
 
