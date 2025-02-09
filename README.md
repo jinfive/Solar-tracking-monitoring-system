@@ -12,10 +12,7 @@
 <div align="center">
   <a href="https://ibb.co/4gs1mHzc"><img src="https://i.ibb.co/LhQNk3mM/Kakao-Talk-Photo-2025-02-09-21-14-43-002.jpg" alt="Kakao-Talk-Photo-2025-02-09-21-14-43-002" border="0"></a>
   
-  <a href="https://ibb.co/4gs1mHzc"><img src="https://i.ibb.co/4gs1mHzc/Kakao-Talk-Photo-2025-02-09-21-14-43-002.jpg" alt="Kakao-Talk-Photo-2025-02-09-21-14-43-002" border="0"></a>
-
-
-  <a href="https://ibb.co/DKc6f5t"><img src="https://i.ibb.co/YjnKBp3/image.png" alt="image" border="0"></a>
+  <a href="https://ibb.co/tTY48YX0"><img src="https://i.ibb.co/Pv1Nw1Q2/Kakao-Talk-Photo-2025-02-09-21-14-43-001.jpg" alt="Kakao-Talk-Photo-2025-02-09-21-14-43-001" border="0"></a>
   <br>
   
 </div>
@@ -28,16 +25,15 @@
 ## 📌 project information
 ### KANGWON NATIONAL UNIVERSITY
 📖 
-capstone design
-Development period:2024.03.04 ~ 2024.06.10
+Development period:2023.11.09 ~ 2023.12.07
 <br>
 ## 👥 Team introduction
-Team leader:김흥주
+Team leader:김진오
 <br>
-team member:김진오,남강현,이채형
+team member:남강현,박상욱,이정원
 
 ## Project Introduction
-Development of Power-analysis-control-system-for-home-smart-grid
+Development of Solar tracking monitoring system
 <ul>
   <li>Energy saving: Blocking standby power for home appliances used at home</li>
   <li>Abnormal current detection: Analyzes the current waveform of electronic products in use and cuts off power when an abnormality is detected.</li>
